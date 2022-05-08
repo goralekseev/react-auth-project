@@ -30,7 +30,7 @@ const AuthForm = () => {
     let url;
     if (isLogin) {
       url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=AIzaSyAj8stRGa-UEsOGQizWuOdBsUI80xM4vu0";
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAj8stRGa-UEsOGQizWuOdBsUI80xM4vu0";
     } else {
       url =
         "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAj8stRGa-UEsOGQizWuOdBsUI80xM4vu0";
