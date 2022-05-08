@@ -5,6 +5,7 @@ import AuthContext from "../../store/auth-context";
 import classes from "./AuthForm.module.css";
 
 const AuthForm = () => {
+  const history = useHistory();
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
 
@@ -29,10 +30,10 @@ const AuthForm = () => {
     let url;
     if (isLogin) {
       url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAj8stRGa-UEsOGQizWuOdBsUI80xM4vu0";
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=AIzaSyAj8stRGa-UEsOGQizWuOdBsUI80xM4vu0";
     } else {
       url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=AIzaSyAj8stRGa-UEsOGQizWuOdBsUI80xM4vu0";
+        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAj8stRGa-UEsOGQizWuOdBsUI80xM4vu0";
     }
     fetch(url, {
       method: "POST",
@@ -61,10 +62,14 @@ const AuthForm = () => {
         }
       })
       .then((data) => {
-        authCtx.login(data.idToken);
+        const expirationTime = new Date(
+          new Date().getTime() + +data.expiresIn * 1000
+        );
+        authCtx.login(data.idToken, expirationTime.toISOString());
+        history.replace("/");
       })
       .catch((err) => {
-        alert(err.Message);
+        alert(err.message);
       });
   };
 
